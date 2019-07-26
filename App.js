@@ -1,12 +1,9 @@
 import React from "react"
-import { Dimensions } from 'react-native'
-import { StyleSheet, Text, View, Image, Button, Alert } from "react-native"
+import { StyleSheet, View, Alert } from "react-native"
 import { Google } from 'expo';
-import NavBar from './components/tabNav'
-import {
-  LineChart
-} from 'react-native-chart-kit'
-const googleConfig = require('./config/google_config')
+import NavBar from './src/components/tabNav'
+import googleConfig from './config/google_config'
+import LoginPage from './src/components/logInPage'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,7 +14,8 @@ export default class App extends React.Component {
       name: "",
       photoUrl: "",
       publicChartLabelData: [],
-      publicChartMoneyData: []
+      publicChartMoneyData: [],
+      currentPublicChartValue: NaN
     }
   }
 
@@ -67,15 +65,13 @@ export default class App extends React.Component {
         else {
           Alert.alert(
             'Log in Error:',
-            'Reason: Not authorized to enter.',
+            'Not authorized to enter.',
             [
-              { text: 'OK', onPress: () => console.log('OK Pressed') },
+              { text: 'OK', onPress: () => {} },
             ],
             { cancelable: true },
           );
         }
-      } else {
-        console.log("cancelled")
       }
     } catch (e) {
       console.log(e.message)
@@ -100,58 +96,16 @@ export default class App extends React.Component {
     } else {
       return (
         <View style={styles.container}>
-          {<LoginPage signIn={this.signIn} labelData={this.state.publicChartLabelData} moneyData={this.state.publicChartMoneyData}/>}
+          <LoginPage 
+            signIn={this.signIn} 
+            labelData={this.state.publicChartLabelData} 
+            moneyData={this.state.publicChartMoneyData}
+            currentValue={this.state.currentPublicChartValue}
+          />  
         </View>
       )
     }
   }
-}
-
-const LoginPage = (props) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>SIMM Public Portfolio</Text>
-      <LineChart
-        data={{
-          labels: props.labelData,
-          datasets: [{
-            data: props.moneyData,
-            strokeWidth: 2
-          }]
-        }}
-        width={Dimensions.get('window').width}
-        height={400}
-        withShadow={false}
-        withInnerLines={false}
-        withVerticalLabels={false}
-        chartConfig={{
-          backgroundGradientFrom: '#1E2923',
-          backgroundGradientTo: '#08130D',
-          decimalPlaces: 2,
-          color: () => '#00FFFF',
-        }}
-        onDataPointClick={({value, dataset, getColor}) => {
-          console.log(value)
-        }}
-        style={{
-          borderRadius: 16,
-          paddingTop: 30
-        }}
-      />
-      <Button title="Sign in with Google" onPress={() => props.signIn()} />
-    </View>
-  )
-}
-
-const LoggedInPage = props => {
-  return (
-    <View style={styles.container}>
-      <Text>{props.email}</Text>
-      <Text style={styles.header}>Welcome {props.name}!</Text>
-      <Image style={styles.image} source={{ uri: props.photoUrl }} />
-      <Button title="Sign Out of Google" onPress={() => props.signOut()} />
-    </View>
-  )
 }
 
 const styles = StyleSheet.create({
