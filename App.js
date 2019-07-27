@@ -71,6 +71,9 @@ export default class App extends React.Component {
           })
         }
         else {
+          this.setState({
+            loading:false
+          })
           Alert.alert(
             'Log in Error:',
             'Not authorized to enter.',
@@ -81,6 +84,9 @@ export default class App extends React.Component {
           );
         }
       }
+      this.setState({
+        loading:false
+      })
     } catch (e) {
       console.log(e.message)
     }
