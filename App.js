@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View, Alert } from "react-native"
+import { StyleSheet, View, Modal, ActivityIndicator, Alert } from "react-native"
 import { Google } from 'expo';
 import NavBar from './src/components/tabNav'
 import googleConfig from './config/google_config'
@@ -15,15 +15,19 @@ export default class App extends React.Component {
       photoUrl: "",
       publicChartLabelData: [],
       publicChartMoneyData: [],
-      currentPublicChartValue: NaN
+      loading: false
     }
   }
 
   async componentDidMount() {
+    this.setState({
+      loading:true
+    })
     const pcData = await this.getPublicChartData();
     this.setState({
       publicChartLabelData: pcData.map(pc => pc[0]),
-      publicChartMoneyData: pcData.map(pc => parseFloat(pc[1].replace('$', '').replace(',', '')))
+      publicChartMoneyData: pcData.map(pc => parseFloat(pc[1].replace('$', '').replace(',', ''))),
+      loading: false
     })
   }
 
@@ -56,10 +60,14 @@ export default class App extends React.Component {
         scopes: ["profile", "email"]
       })
       if (result.type === "success") {
+        this.setState({
+          loading:true
+        })
         const isAuthorized = await this.isAuthorized(result.user.email);
         if (isAuthorized) {
           this.setState({
-            signedIn: true
+            signedIn: true,
+            loading:false
           })
         }
         else {
@@ -67,7 +75,7 @@ export default class App extends React.Component {
             'Log in Error:',
             'Not authorized to enter.',
             [
-              { text: 'OK', onPress: () => {} },
+              { text: 'OK', onPress: () => { } },
             ],
             { cancelable: true },
           );
@@ -89,42 +97,36 @@ export default class App extends React.Component {
   }
 
   render() {
-    if (this.state.signedIn === true) {
-      return (
-        <NavBar screenProps={{ signOut: this.signOut }}></NavBar>
+    if(this.state.loading){
+      return(
+      <ActivityIndicator
+               animating = {this.state.loading}
+               color = '#000000'
+               size = "large"
+               style = {styles.activityIndicator}/>
       )
-    } else {
-      return (
-        <View style={styles.container}>
-          <LoginPage 
-            signIn={this.signIn} 
-            labelData={this.state.publicChartLabelData} 
-            moneyData={this.state.publicChartMoneyData}
-            currentValue={this.state.currentPublicChartValue}
-          />  
-        </View>
-      )
+    } else{
+      if (this.state.signedIn === true) {
+        return (
+          <NavBar screenProps={{ signOut: this.signOut }}></NavBar>
+        )
+      } else {
+        return (
+            <LoginPage
+            signIn={this.signIn}
+            labelData={this.state.publicChartLabelData}
+            moneyData={this.state.publicChartMoneyData}></LoginPage>
+        )
+      }
     }
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  header: {
-    fontSize: 30,
-    paddingTop: 50
-  },
-  image: {
-    marginTop: 15,
-    width: 150,
-    height: 150,
-    borderColor: "rgba(0,0,0,0.2)",
-    borderWidth: 3,
-    borderRadius: 150
+const styles = StyleSheet.create ({
+  activityIndicator: {
+     flex: 1,
+     justifyContent: 'center',
+     alignItems: 'center',
+     height: 80
   }
 })
