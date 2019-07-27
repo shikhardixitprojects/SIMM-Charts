@@ -40,8 +40,8 @@ class LoginPage extends React.Component {
                 onDataPointClick={({value, dataset, getColor}) => {
                   let dateIndex = this.props.moneyData.indexOf(value);  
                   this.setState({
-                      clickedValue: value,
-                      clickedDate: this.props.labelData[dateIndex]
+                      clickedValue: `Value: $${value}`,
+                      clickedDate: `Date: ${this.props.labelData[dateIndex]}`
                   })
                 }}
                 style={{
@@ -51,7 +51,7 @@ class LoginPage extends React.Component {
               />
               </View>
               <View style={{flex:1, flexDirection: 'row',justifyContent:'center',width:Dimensions.get('window').width}}>
-                <Text style={{fontSize:23,fontWeight:'500'}}>Date: {this.state.clickedDate}, Value: {this.state.clickedValue}</Text>
+                <Text style={{fontSize:23,fontWeight:'500'}}>{this.state.clickedDate}    {this.state.clickedValue}</Text>
               </View>
                 <View style={{flex:2}}>
                     <Button raised={true} title="Sign In With Google" type="solid" onPress={() => {this.props.signIn()}} />
