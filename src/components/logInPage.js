@@ -7,8 +7,8 @@ class LoginPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      clickedValue: ' ',
-      clickedDate: ' '
+      clickedValue: '',
+      clickedDate: 'Click on Dot to view X/Y Value'
     }
   }
 
@@ -16,19 +16,19 @@ class LoginPage extends React.Component {
     return (
       <View style={styles.container}>
         <View style={{ flex: 2 }}>
-          <Text style={styles.header}>SIMM Public Portfolio</Text>
+          <Text style={styles.header}>SBU SIMM Charts</Text>
         </View>
-        <View style={{ flex: 8 }}>
+        <View style={{ flex: 11 }}>
           <LineChart
             data={{
               labels: this.props.labelData,
               datasets: [{
                 data: this.props.moneyData,
-                strokeWidth: 2
+                strokeWidth: 3
               }]
             }}
             width={Dimensions.get('window').width}
-            height={350}
+            height={450}
             withInnerLines={false}
             withVerticalLabels={false}
             chartConfig={{
@@ -45,13 +45,12 @@ class LoginPage extends React.Component {
               })
             }}
             style={{
-              borderRadius: 16,
-              paddingTop: 30
+              paddingTop: 20
             }}
           />
         </View>
-        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', width: Dimensions.get('window').width }}>
-          <Text style={{ fontSize: 23, fontWeight: '500' }}>{this.state.clickedDate}    {this.state.clickedValue}</Text>
+        <View style={{ position:'absolute', bottom:'22%', left:'2%',flex: 1, flexDirection: 'row', justifyContent: 'center', width: Dimensions.get('window').width }}>
+          <Text style={{ color:'white', fontSize: 23, fontWeight: '500' }}>{this.state.clickedDate}    {this.state.clickedValue}</Text>
         </View>
         <View style={{ flex: 2 }}>
           <Button raised={true} title="Sign In With Google" type="solid" onPress={() => { this.props.signIn() }} />
@@ -71,20 +70,11 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 30,
+    letterSpacing: 3,
     paddingTop: 50,
-    fontWeight: '600',
-    textDecorationLine: 'underline',
-    textShadowColor: 'blue'
-  },
-  image: {
-    marginTop: 15,
-    width: 150,
-    height: 150,
-    borderColor: "rgba(0,0,0,0.2)",
-    borderWidth: 3,
-    borderRadius: 150
-  },
-
+    fontWeight: '700',
+    fontFamily:'Arial'
+  }
 })
 
 export default LoginPage;

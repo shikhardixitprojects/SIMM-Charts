@@ -1,5 +1,6 @@
 import React from "react"
-import { ScrollView, Stylesheet, ActivityIndicator, Button, Text, View } from "react-native"
+import { ActivityIndicator, Text, View } from "react-native"
+import { Button } from 'react-native-elements';
 
 class ChatScreen extends React.Component {
   constructor(props) {

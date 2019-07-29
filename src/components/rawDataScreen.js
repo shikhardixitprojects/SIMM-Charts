@@ -24,7 +24,7 @@ class RawDataScreen extends React.Component {
       loading: false
     })
   }
-
+  
   getPrivateChartData = async () => {
     const res = await fetch('http://ca7d405b.ngrok.io/privateRawData');
     const privateData = await res.json();
@@ -48,7 +48,7 @@ class RawDataScreen extends React.Component {
         <View style={styles.container}>
           <ScrollView horizontal={true} >
             <View>
-              <Table borderStyle={{ borderColor: '#C1C0B9' }}>
+              <Table>
                 <Row data={tableHead} widthArr={widthArr} style={styles.head} textStyle={styles.headText} />
               </Table>
               <ScrollView style={styles.dataWrapper}>

@@ -1,5 +1,6 @@
 import React from "react"
-import { Button, Text, View } from "react-native"
+import { Text, View } from "react-native"
+import { Button } from 'react-native-elements';
 
 class ChartScreen extends React.Component {
   constructor(props) {
@@ -12,8 +13,7 @@ class ChartScreen extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', color: 'yellow' }}>
-        <Text style={{ color: 'green' }}>Chart Screen!</Text>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Button containerStyle={{ width: '50%' }} titleStyle={{ color: 'red' }} type="clear" raised={true} title="Sign Out" onPress={() => this.props.screenProps.signOut()} />
       </View>
     );
