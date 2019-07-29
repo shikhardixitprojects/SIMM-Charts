@@ -18,7 +18,7 @@ export default class App extends React.Component {
 
   async componentDidMount() {
     this.setState({
-      loading:true
+      loading: true
     })
     const pcData = await this.getPublicChartData();
     this.setState({
@@ -58,18 +58,18 @@ export default class App extends React.Component {
       })
       if (result.type === "success") {
         this.setState({
-          loading:true
+          loading: true
         })
         const isAuthorized = await this.isAuthorized(result.user.email);
         if (isAuthorized) {
           this.setState({
             signedIn: true,
-            loading:false
+            loading: false
           })
         }
         else {
           this.setState({
-            loading:false
+            loading: false
           })
           Alert.alert(
             'Log in Error:',
@@ -82,7 +82,7 @@ export default class App extends React.Component {
         }
       }
       this.setState({
-        loading:false
+        loading: false
       })
     } catch (e) {
       console.log(e.message)
@@ -91,31 +91,46 @@ export default class App extends React.Component {
 
   signOut = async () => {
     try {
-      this.setState({
-        signedIn: false
-      })
+      Alert.alert(
+        '',
+        'Are you sure you want to Sign Out?',
+        [
+          {
+            text: 'Yes', onPress: () => this.setState({
+              signedIn: false,
+            }),
+            style: 'default'
+          },
+          {
+            text: 'Cancel',
+            onPress: () => { },
+            style: 'cancel',
+          },
+        ],
+        { cancelable: true },
+      );
     } catch (e) {
       console.log("error", e)
     }
   }
 
   render() {
-    if(this.state.loading){
-      return(
-      <ActivityIndicator
-               animating = {this.state.loading}
-               color = '#000000'
-               size = "large"
-               style = {styles.activityIndicator}/>
+    if (this.state.loading) {
+      return (
+        <ActivityIndicator
+          animating={this.state.loading}
+          color='#000000'
+          size="large"
+          style={styles.activityIndicator} />
       )
-    } else{
+    } else {
       if (this.state.signedIn === true) {
         return (
           <NavBar screenProps={{ signOut: this.signOut }}></NavBar>
         )
       } else {
         return (
-            <LoginPage
+          <LoginPage
             signIn={this.signIn}
             labelData={this.state.publicChartLabelData}
             moneyData={this.state.publicChartMoneyData}></LoginPage>
@@ -125,11 +140,11 @@ export default class App extends React.Component {
   }
 }
 
-const styles = StyleSheet.create ({
+const styles = StyleSheet.create({
   activityIndicator: {
-     flex: 1,
-     justifyContent: 'center',
-     alignItems: 'center',
-     height: 80
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 80
   }
 })
