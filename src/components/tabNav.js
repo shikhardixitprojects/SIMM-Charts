@@ -18,13 +18,13 @@ const Nav = createAppContainer(createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: () => <Icon name='linechart' type='antdesign' />
       }
-    },
+    }/*,
     Chat: {
       screen: ChatScreen,
       navigationOptions: {
         tabBarIcon: () => <Icon name='md-chatboxes' type='ionicon' />
       }
-    },
+    },*/
   },
   {
     tabBarOptions: {

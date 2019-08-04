@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View, Modal, ActivityIndicator, Alert } from "react-native"
+import { StyleSheet, ActivityIndicator, Alert } from "react-native"
 import { Google } from 'expo';
 import NavBar from './src/components/tabNav'
 import googleConfig from './config/google_config'
@@ -29,14 +29,14 @@ export default class App extends React.Component {
   }
 
   getPublicChartData = async () => {
-    const res = await fetch('http://ca7d405b.ngrok.io/publicChartData');
+    const res = await fetch('http://e9da1bb7.ngrok.io/publicChartData');
     const pcData = await res.json();
     return pcData;
   }
 
   isAuthorized = async (incomingEmail) => {
     const data = { email: incomingEmail }
-    const res = await fetch('http://ca7d405b.ngrok.io/authData', {
+    const res = await fetch('http://e9da1bb7.ngrok.io/authData', {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify(data),
@@ -72,7 +72,7 @@ export default class App extends React.Component {
             loading: false
           })
           Alert.alert(
-            'Log in Error:',
+            'Log in Error',
             'Not authorized to enter.',
             [
               { text: 'OK', onPress: () => { } },
@@ -126,7 +126,7 @@ export default class App extends React.Component {
     } else {
       if (this.state.signedIn === true) {
         return (
-          <NavBar screenProps={{ signOut: this.signOut }}></NavBar>
+          <NavBar screenProps={{ signOut: this.signOut, labelData:this.state.publicChartLabelData, moneyData:this.state.publicChartMoneyData }}></NavBar>
         )
       } else {
         return (
