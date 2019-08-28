@@ -29,14 +29,14 @@ export default class App extends React.Component {
   }
 
   getPublicChartData = async () => {
-    const res = await fetch('http://e9da1bb7.ngrok.io/publicChartData');
+    const res = await fetch('https://enigmatic-wildwood-36923.herokuapp.com/publicChartData');
     const pcData = await res.json();
     return pcData;
   }
 
   isAuthorized = async (incomingEmail) => {
     const data = { email: incomingEmail }
-    const res = await fetch('http://e9da1bb7.ngrok.io/authData', {
+    const res = await fetch('https://enigmatic-wildwood-36923.herokuapp.com/authData', {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify(data),

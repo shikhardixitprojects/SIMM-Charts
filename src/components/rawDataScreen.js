@@ -26,7 +26,7 @@ class RawDataScreen extends React.Component {
   }
   
   getPrivateChartData = async () => {
-    const res = await fetch('http://e9da1bb7.ngrok.io/privateRawData');
+    const res = await fetch('https://enigmatic-wildwood-36923.herokuapp.com/privateRawData');
     const privateData = await res.json();
     return privateData;
   }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Linking, Dimensions, StyleSheet, Text, View } from "react-native";
 import { LineChart } from 'react-native-chart-kit';
 import { Button } from 'react-native-elements';
 
@@ -49,11 +49,18 @@ class LoginPage extends React.Component {
             }}
           />
         </View>
-        <View style={{ position:'absolute', bottom:'22%', left:'2%',flex: 1, flexDirection: 'row', justifyContent: 'center', width: Dimensions.get('window').width }}>
-          <Text style={{ color:'white', fontSize: 23, fontWeight: '500' }}>{this.state.clickedDate}    {this.state.clickedValue}</Text>
+        <View style={{ position: 'absolute', bottom: '22%', left: '2%', flex: 1, flexDirection: 'row', justifyContent: 'center', width: Dimensions.get('window').width }}>
+          <Text style={{ color: 'white', fontSize: 23, fontWeight: '500' }}>{this.state.clickedDate}    {this.state.clickedValue}</Text>
         </View>
         <View style={{ flex: 2 }}>
           <Button raised={true} title="Sign In With Google" type="solid" onPress={() => { this.props.signIn() }} />
+          <Text>(For Authentication Purposes)</Text>
+          <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+            <Text style={{ color: 'blue' }}
+              onPress={() => Linking.openURL('https://docs.google.com/document/d/1j8rH0IlnFkCElLeaIaYba1zVD0uiuUNDBG_ueOFJZJw/edit?ts=5d6434b1')}>
+              Privacy Policy
+          </Text>
+          </View>
         </View>
       </View>
     )
@@ -73,7 +80,7 @@ const styles = StyleSheet.create({
     letterSpacing: 3,
     paddingTop: 50,
     fontWeight: '700',
-    fontFamily:'Arial'
+    fontFamily: 'Arial'
   }
 })
 
