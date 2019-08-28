@@ -12,7 +12,7 @@ export default class App extends React.Component {
       signedIn: false,
       publicChartLabelData: [],
       publicChartMoneyData: [],
-      loading: false
+      loading: true
     }
   }
 

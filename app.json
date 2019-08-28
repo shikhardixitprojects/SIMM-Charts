@@ -24,7 +24,13 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.BonaventureUniversity.SIMMCharts",
       "supportsTablet": true
+    },
+    "android": {
+      "permissions": [],
+      "versionCode": 1,
+      "package": "com.BonaventureUniversity.SIMMCharts"
     }
   }
 }
