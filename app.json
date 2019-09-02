@@ -25,7 +25,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.BonaventureUniversity.SIMMCharts",
-      "supportsTablet": false,
+      "supportsTablet": true,
       "config": {
         "googleSignIn": {
           "reservedClientId":"com.googleusercontent.apps.165868561200-skgas4kdc9qqqpr8gfb6dtrr5q012l9s"
