@@ -25,12 +25,23 @@
     ],
     "ios": {
       "bundleIdentifier": "com.BonaventureUniversity.SIMMCharts",
-      "supportsTablet": true
+      "supportsTablet": false,
+      "config": {
+        "googleSignIn": {
+          "reservedClientId":"com.googleusercontent.apps.165868561200-skgas4kdc9qqqpr8gfb6dtrr5q012l9s"
+        }
+      }
     },
     "android": {
       "permissions": [],
       "versionCode": 1,
-      "package": "com.BonaventureUniversity.SIMMCharts"
+      "package": "com.BonaventureUniversity.SIMMCharts",
+      "config": {
+        "googleSignIn": {
+          "apiKey": "AIzaSyAzvV1VcrQxyPbzyMy_Ev6m_YFRm1Qt1vo",
+          "certificateHash": "FDDAC40F0D7FC99D60818524A9E97DC46AA37890"
+        }
+      }
     }
   }
 }
