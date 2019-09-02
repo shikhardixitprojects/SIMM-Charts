@@ -54,6 +54,8 @@ export default class App extends React.Component {
       const result = await Google.logInAsync({
         androidClientId: googleConfig.androidClientId,
         iosClientId: googleConfig.iosClientId,
+        iosStandaloneAppClientId: googleConfig.iosStandaloneAppClientId,
+        androidStandaloneAppClientId: googleConfig.androidStandaloneAppClientId,
         scopes: ["profile", "email"]
       })
       if (result.type === "success") {
