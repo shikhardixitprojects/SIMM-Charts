@@ -12,7 +12,7 @@ class LoginPage extends React.Component {
     }
   }
 
-  render() {    
+  render() {
     return (
       <View style={styles.container}>
         <View style={{ flex: 2 }}>
@@ -54,13 +54,13 @@ class LoginPage extends React.Component {
         </View>
         <View style={{ flex: 2 }}>
           <Button raised={true} title="Sign In With Google" type="solid" onPress={() => { this.props.signIn() }} />
-          <Text style={{color:'white'}}>(For Authentication Purposes)</Text>
+          <Text style={{ color: 'white' }}>(For Authentication Purposes)</Text>
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             {/* <Text style={{ color: 'blue' }}
               onPress={() => Linking.openURL('https://docs.google.com/document/d/1j8rH0IlnFkCElLeaIaYba1zVD0uiuUNDBG_ueOFJZJw/edit?ts=5d6434b1')}>
               Contact
             </Text> */}
-            <Text style={{ color: '#0185EA',  textDecorationLine:'underline'}}
+            <Text style={{ color: '#0185EA', textDecorationLine: 'underline' }}
               onPress={() => Linking.openURL('https://docs.google.com/document/d/1j8rH0IlnFkCElLeaIaYba1zVD0uiuUNDBG_ueOFJZJw/edit?ts=5d6434b1')}>
               Privacy Policy
             </Text>
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     letterSpacing: 3,
     paddingTop: 50,
     fontWeight: '700',
-    color:'white'
+    color: 'white'
   }
 })
 
