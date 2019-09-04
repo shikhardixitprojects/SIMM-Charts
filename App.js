@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSheet, ActivityIndicator, Alert } from "react-native"
-import { Google } from 'expo';
+import * as Google from 'expo-google-app-auth';
+import * as AppAuth from 'expo-app-auth';
 import NavBar from './src/components/tabNav'
 import googleConfig from './config/google_config'
 import LoginPage from './src/components/logInPage'
@@ -56,7 +57,8 @@ export default class App extends React.Component {
         iosClientId: googleConfig.iosClientId,
         iosStandaloneAppClientId: googleConfig.iosStandaloneAppClientId,
         androidStandaloneAppClientId: googleConfig.androidStandaloneAppClientId,
-        scopes: ["profile", "email"]
+        scopes: ["profile", "email"],
+        redirectUrl: `${AppAuth.OAuthRedirect}:/oauth2redirect/google`
       })
       if (result.type === "success") {
         this.setState({
@@ -128,7 +130,7 @@ export default class App extends React.Component {
     } else {
       if (this.state.signedIn === true) {
         return (
-          <NavBar screenProps={{ signOut: this.signOut, labelData:this.state.publicChartLabelData, moneyData:this.state.publicChartMoneyData }}></NavBar>
+          <NavBar screenProps={{ signOut: this.signOut, labelData: this.state.publicChartLabelData, moneyData: this.state.publicChartMoneyData }}></NavBar>
         )
       } else {
         return (
