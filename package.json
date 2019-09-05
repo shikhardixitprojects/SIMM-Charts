@@ -13,6 +13,7 @@
     "expo": "^33.0.0",
     "expo-constants": "~5.0.1",
     "expo-google-app-auth": "^6.0.0",
+    "expo-google-sign-in": "~5.0.1",
     "firebase": "^6.2.4",
     "moment": "^2.24.0",
     "node": "^12.6.0",

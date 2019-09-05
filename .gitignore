@@ -11,3 +11,4 @@ web-report/
 config/
 yarn.lock
 yarn-error.log
+google-services.json

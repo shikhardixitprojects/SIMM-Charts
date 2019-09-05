@@ -1,7 +1,8 @@
 import React from "react"
 import { StyleSheet, ActivityIndicator, Alert } from "react-native"
-import * as Google from 'expo-google-app-auth';
-import * as AppAuth from 'expo-app-auth';
+import * as GoogleSignIn from 'expo-google-sign-in'
+import * as Google from 'expo-google-app-auth'
+import Constants from 'expo-constants';
 import NavBar from './src/components/tabNav'
 import googleConfig from './config/google_config'
 import LoginPage from './src/components/logInPage'
@@ -50,44 +51,77 @@ export default class App extends React.Component {
     return isAuthorized;
   }
 
+  syncUserWithStateAsync = async () => {
+    const user = await GoogleSignIn.signInSilentlyAsync();
+    this.setState({ user });
+  };
+
   signIn = async () => {
     try {
-      const result = await Google.logInAsync({
-        androidClientId: googleConfig.androidClientId,
-        iosClientId: googleConfig.iosClientId,
-        iosStandaloneAppClientId: googleConfig.iosStandaloneAppClientId,
-        androidStandaloneAppClientId: googleConfig.androidStandaloneAppClientId,
-        scopes: ["profile", "email"],
-        redirectUrl: `${AppAuth.OAuthRedirect}:/oauth2redirect/google`
-      })
-      if (result.type === "success") {
+      if (Constants.appOwnership === "expo") {
+        const result = await Google.logInAsync({
+          androidClientId: googleConfig.androidClientId,
+          iosClientId: googleConfig.iosClientId,
+
+          scopes: ["profile", "email"]
+        })
+        if (result.type === "success") {
+          this.setState({
+            loading: true
+          })
+          const isAuthorized = await this.isAuthorized(result.user.email);
+          if (isAuthorized) {
+            this.setState({
+              signedIn: true,
+              loading: false
+            })
+          }
+          else {
+            this.setState({
+              loading: false
+            })
+            Alert.alert(
+              'Log in Error',
+              'Not authorized to enter.',
+              [
+                { text: 'OK', onPress: () => { } },
+              ],
+              { cancelable: true },
+            );
+          }
+        }
+      } else if (Constants.appOwnership === "standalone") {
         this.setState({
           loading: true
         })
-        const isAuthorized = await this.isAuthorized(result.user.email);
-        if (isAuthorized) {
-          this.setState({
-            signedIn: true,
-            loading: false
-          })
+        await GoogleSignIn.initAsync({
+          clientId: googleConfig.standaloneIosClientId
+        })
+        await GoogleSignIn.askForPlayServicesAsync();
+        const { type, user } = await GoogleSignIn.signInAsync();
+        if (type === 'success') {
+          const isAuthorized = await this.isAuthorized(user.email);
+          if (isAuthorized) {
+            this.setState({
+              signedIn: true,
+              loading: false
+            })
+          } else {
+            this.setState({
+              loading: false
+            })
+            Alert.alert(
+              'Log in Error',
+              'Not authorized to enter.',
+              [
+                { text: 'OK', onPress: () => { } },
+              ],
+              { cancelable: true },
+            );
+          }
         }
-        else {
-          this.setState({
-            loading: false
-          })
-          Alert.alert(
-            'Log in Error',
-            'Not authorized to enter.',
-            [
-              { text: 'OK', onPress: () => { } },
-            ],
-            { cancelable: true },
-          );
-        }
+
       }
-      this.setState({
-        loading: false
-      })
     } catch (e) {
       console.log(e.message)
     }
