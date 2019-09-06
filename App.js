@@ -62,7 +62,6 @@ export default class App extends React.Component {
         const result = await Google.logInAsync({
           androidClientId: googleConfig.androidClientId,
           iosClientId: googleConfig.iosClientId,
-
           scopes: ["profile", "email"]
         })
         if (result.type === "success") {
@@ -107,6 +106,7 @@ export default class App extends React.Component {
               loading: false
             })
           } else {
+            await GoogleSignIn.signOutAsync();
             this.setState({
               loading: false
             })
@@ -129,6 +129,9 @@ export default class App extends React.Component {
 
   signOut = async () => {
     try {
+      if(Constants.appOwnership === 'standalone'){
+        await GoogleSignIn.signOutAsync();
+      }
       Alert.alert(
         '',
         'Are you sure you want to Sign Out?',
