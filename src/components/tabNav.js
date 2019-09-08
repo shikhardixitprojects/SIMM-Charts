@@ -1,5 +1,4 @@
 import React from "react"
-import ChatScreen from './chatScreen';
 import RawDataScreen from './rawDataScreen';
 import ChartScreen from './chartScreen';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
@@ -18,13 +17,7 @@ const Nav = createAppContainer(createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: () => <Icon name='linechart' type='antdesign' />
       }
-    }/*,
-    Chat: {
-      screen: ChatScreen,
-      navigationOptions: {
-        tabBarIcon: () => <Icon name='md-chatboxes' type='ionicon' />
-      }
-    },*/
+    }
   },
   {
     tabBarOptions: {

@@ -51,10 +51,36 @@ export default class App extends React.Component {
     return isAuthorized;
   }
 
-  syncUserWithStateAsync = async () => {
-    const user = await GoogleSignIn.signInSilentlyAsync();
-    this.setState({ user });
-  };
+  handleAuthorization = async (type, userEmail) => {
+    if (type === "success") {
+      this.setState({
+        loading: true
+      })
+      const isAuthorized = await this.isAuthorized(userEmail);
+      if (isAuthorized) {
+        this.setState({
+          signedIn: true,
+          loading: false
+        })
+      }
+      else {
+        if (Constants.appOwnership === 'standalone') {
+          await GoogleSignIn.signOutAsync();
+        }
+        this.setState({
+          loading: false
+        })
+        Alert.alert(
+          'Log in Error',
+          'Not authorized to enter.',
+          [
+            { text: 'OK', onPress: () => { } },
+          ],
+          { cancelable: true },
+        );
+      }
+    }
+  }
 
   signIn = async () => {
     try {
@@ -64,31 +90,7 @@ export default class App extends React.Component {
           iosClientId: googleConfig.iosClientId,
           scopes: ["profile", "email"]
         })
-        if (result.type === "success") {
-          this.setState({
-            loading: true
-          })
-          const isAuthorized = await this.isAuthorized(result.user.email);
-          if (isAuthorized) {
-            this.setState({
-              signedIn: true,
-              loading: false
-            })
-          }
-          else {
-            this.setState({
-              loading: false
-            })
-            Alert.alert(
-              'Log in Error',
-              'Not authorized to enter.',
-              [
-                { text: 'OK', onPress: () => { } },
-              ],
-              { cancelable: true },
-            );
-          }
-        }
+        this.handleAuthorization(result.type, result.user.email);
       } else if (Constants.appOwnership === "standalone") {
         this.setState({
           loading: true
@@ -98,29 +100,29 @@ export default class App extends React.Component {
         })
         await GoogleSignIn.askForPlayServicesAsync();
         const { type, user } = await GoogleSignIn.signInAsync();
-        if (type === 'success') {
-          const isAuthorized = await this.isAuthorized(user.email);
-          if (isAuthorized) {
-            this.setState({
-              signedIn: true,
-              loading: false
-            })
-          } else {
-            await GoogleSignIn.signOutAsync();
-            this.setState({
-              loading: false
-            })
-            Alert.alert(
-              'Log in Error',
-              'Not authorized to enter.',
-              [
-                { text: 'OK', onPress: () => { } },
-              ],
-              { cancelable: true },
-            );
-          }
-        }
-
+        this.handleAuthorization(type, user.email);
+        // if (type === 'success') {
+        //   const isAuthorized = await this.isAuthorized(user.email);
+        //   if (isAuthorized) {
+        //     this.setState({
+        //       signedIn: true,
+        //       loading: false
+        //     })
+        //   } else {
+        //     await GoogleSignIn.signOutAsync();
+        //     this.setState({
+        //       loading: false
+        //     })
+        //     Alert.alert(
+        //       'Log in Error',
+        //       'Not authorized to enter.',
+        //       [
+        //         { text: 'OK', onPress: () => { } },
+        //       ],
+        //       { cancelable: true },
+        //     );
+        //   }
+        // }
       }
     } catch (e) {
       console.log(e.message)
@@ -129,7 +131,7 @@ export default class App extends React.Component {
 
   signOut = async () => {
     try {
-      if(Constants.appOwnership === 'standalone'){
+      if (Constants.appOwnership === 'standalone') {
         await GoogleSignIn.signOutAsync();
       }
       Alert.alert(

@@ -1,5 +1,5 @@
 import React from "react"
-import { ScrollView, StyleSheet, ActivityIndicator, Text, View } from "react-native"
+import { ScrollView, StyleSheet, ActivityIndicator, View } from "react-native"
 import { Table, TableWrapper, Row, Rows } from 'react-native-table-component';
 import { Button } from 'react-native-elements';
 
