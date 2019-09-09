@@ -96,7 +96,7 @@ export default class App extends React.Component {
           loading: true
         })
         await GoogleSignIn.initAsync({
-          clientId: googleConfig.standaloneIosClientId
+          clientId: googleConfig.iosStandaloneAppClientId
         })
         await GoogleSignIn.askForPlayServicesAsync();
         const { type, user } = await GoogleSignIn.signInAsync();
