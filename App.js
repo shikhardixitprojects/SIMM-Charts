@@ -101,28 +101,6 @@ export default class App extends React.Component {
         await GoogleSignIn.askForPlayServicesAsync();
         const { type, user } = await GoogleSignIn.signInAsync();
         this.handleAuthorization(type, user.email);
-        // if (type === 'success') {
-        //   const isAuthorized = await this.isAuthorized(user.email);
-        //   if (isAuthorized) {
-        //     this.setState({
-        //       signedIn: true,
-        //       loading: false
-        //     })
-        //   } else {
-        //     await GoogleSignIn.signOutAsync();
-        //     this.setState({
-        //       loading: false
-        //     })
-        //     Alert.alert(
-        //       'Log in Error',
-        //       'Not authorized to enter.',
-        //       [
-        //         { text: 'OK', onPress: () => { } },
-        //       ],
-        //       { cancelable: true },
-        //     );
-        //   }
-        // }
       }
     } catch (e) {
       console.log(e.message)
