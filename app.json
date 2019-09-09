@@ -10,7 +10,7 @@
       "android",
       "web"
     ],
-    "version": "6.0.0",
+    "version": "7.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "splash": {
@@ -34,7 +34,7 @@
       }
     },
     "android": {
-      "versionCode": 6,
+      "versionCode": 7,
       "package": "com.BonaventureUniversity.SIMMCharts",
       "googleServicesFile":"./google-services.json"
     }
