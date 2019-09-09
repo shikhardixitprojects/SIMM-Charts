@@ -90,17 +90,19 @@ export default class App extends React.Component {
           iosClientId: googleConfig.iosClientId,
           scopes: ["profile", "email"]
         })
-        this.handleAuthorization(result.type, result.user.email);
+        if (result.type !== 'cancel') {
+          this.handleAuthorization(result.type, result.user.email);
+        }
+
       } else if (Constants.appOwnership === "standalone") {
-        this.setState({
-          loading: true
-        })
         await GoogleSignIn.initAsync({
           clientId: googleConfig.iosStandaloneAppClientId
         })
         await GoogleSignIn.askForPlayServicesAsync();
         const { type, user } = await GoogleSignIn.signInAsync();
-        this.handleAuthorization(type, user.email);
+        if (type !== 'cancel') {
+          this.handleAuthorization(type, user.email);
+        }
       }
     } catch (e) {
       console.log(e.message)
